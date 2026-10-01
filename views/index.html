@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema Auth</title>
+
+    <link rel="stylesheet" href="/assets/css/index.css">
+</head>
+
+<body>
+
+    <main class="auth-container">
+
+        <div class="logo">Auth</div>
+
+        <h1 id="form-title">Iniciar sesión</h1>
+
+        <p id="form-description">
+            Accede a tu cuenta para continuar.
+        </p>
+
+        <form id="auth-form">
+
+            <div id="name-container" style="display: none;">
+                <input
+                    type="text"
+                    id="nombre"
+                    placeholder="Nombre"
+                >
+                 <input
+                     type="text" 
+                    id="apellido"
+                     placeholder="Apellido"
+    >
+            </div>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Contraseña"
+                required
+            >
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="submit-btn"
+            >
+                Iniciar sesión
+            </button>
+
+        </form>
+
+        <div class="auth-buttons">
+
+            <button
+                type="button"
+                class="register-btn"
+                id="toggle-btn"
+            >
+                Crear cuenta
+            </button>
+
+            <button
+                type="button"
+                class="google-btn"
+            >
+                Continuar con Google
+            </button>
+
+        </div>
+
+        <p id="message"></p>
+
+    </main>
+
+    <script src="/assets/js/index.js"></script>
+
+</body>
+
+</html>
+
