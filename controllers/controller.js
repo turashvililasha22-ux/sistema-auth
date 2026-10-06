@@ -68,6 +68,7 @@ async function login(req, res) {
         req.session.userId = usuario._id;
         req.session.email = usuario.email;
         req.session.nombre = usuario.nombre;
+        req.session.apellido = usuario.apellido;
 
         res.json({
             mensaje: 'Login exitoso'

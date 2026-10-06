@@ -3,22 +3,28 @@ import passport from "../config/passport.js";
 
 const router = express.Router();
 
-// Ruta para iniciar sesión con Google
+// Iniciar sesión con Google
 router.get(
     "/google",
     passport.authenticate("google", {
-        scope: ["profile", "email"]
+        scope: ["profile", "email"],
+        prompt: "select_account"
     })
 );
 
-// Callback de Google después de la autenticación
+// Callback de Google
 router.get(
     "/google/callback",
     passport.authenticate("google", {
         failureRedirect: "/"
     }),
     (req, res) => {
-        // Redirigir al dashboard después del inicio de sesión exitoso
+
+        req.session.userId = req.user._id;
+        req.session.email = req.user.email;
+        req.session.nombre = req.user.nombre;
+        req.session.apellido = req.user.apellido;
+
         res.redirect("/dashboard.html");
     }
 );

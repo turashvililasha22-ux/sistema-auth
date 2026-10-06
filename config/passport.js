@@ -15,6 +15,7 @@ passport.use(
                     googleId: profile.id,
                     email: profile.emails[0].value,
                     nombre: profile.name.givenName,
+                    apellido: profile.name.familyName,
                     foto: profile.photos?.[0]?.value
                 });
 
