@@ -1,38 +1,34 @@
-/*console.log("Dashboard JS cargado correctamente");
+import * as usuarioModel from '../models/model.js';
 
-const logoutBtn = document.getElementById("logout-btn");
-console.log("logoutBtn:", logoutBtn);
-
-logoutBtn.addEventListener("click", async () => {
-
-    console.log("Se ha pulsado Cerrar sesión");
+async function dashboard(req, res) {
+    if (!req.session.userId) {
+        return res.status(401).json({
+            error: 'No autorizado'
+        });
+    }
 
     try {
-        const response = await fetch("/logout", {
-            method: "POST"
-        });
+        const usuario = await usuarioModel.buscarPorId(req.session.userId);
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.error || "Error al cerrar sesión");
-            return;
+        if (!usuario) {
+            return res.status(404).json({
+                error: 'Usuario no encontrado'
+            });
         }
 
-        window.location.href = "/";
-
+        res.json({
+            usuario: {
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                email: usuario.email
+            }
+        });
     } catch (error) {
-        console.error("Error:", error);
-        alert("No se pudo conectar con el servidor.");
+        console.error(error);
+        res.status(500).json({
+            error: 'Error al cargar el dashboard'
+        });
     }
-});*/
+}
 
-console.log("Dashboard JS cargado correctamente");
-
-const logoutBtn = document.getElementById("logout-btn");
-
-console.log("logoutBtn:", logoutBtn);
-
-logoutBtn.onclick = () => {
-    console.log("CLICK FUNCIONA");
-};
+export { dashboard };

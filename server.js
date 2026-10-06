@@ -4,10 +4,13 @@ import { fileURLToPath } from "url";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
+import passport from "./config/passport.js";
+
 
 import { conectarDB } from "./config/config.js";
-import { register, login, logout } from "./controllers/controller.js";
-
+import authRoutes from "./routes/auth.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
+import googleRoutes from "./routes/google.routes.js";
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +34,8 @@ app.use(
         })
     })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Archivos públicos
 app.use(express.static(path.join(__dirname, "views")));
@@ -41,17 +46,17 @@ app.get("/", (req, res) => {
 });
 
 // Autenticación
-app.post("/register", register);
-app.post("/login", login);
-app.post("/logout", logout);
+app.use("/", authRoutes);
+app.use("/dashboard", dashboardRoutes);
+app.use("/auth/", googleRoutes);
 
 // Iniciar servidor después de conectar MongoDB
 async function iniciarServidor() {
     try {
         await conectarDB();
 
-app.listen(PORT, () => {
-    console.log(`Servidor funcionando en http://localhost:${PORT}`);
+        app.listen(PORT, () => {
+            console.log(`Servidor funcionando en http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error("Error al iniciar el servidor:", error);
